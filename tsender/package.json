@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.2.4",
+    "@synthetixio/synpress": "^4.1.0",
     "@tanstack/react-query": "^5.75.5",
     "@wagmi/core": "^2.17.1",
     "next": "15.3.2",
@@ -22,6 +23,7 @@
     "wagmi": "^2.15.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.52.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
