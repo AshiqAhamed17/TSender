@@ -5,8 +5,9 @@ import { chainsToTSender, erc20Abi, tsenderAbi } from "@/constants";
 import { calculateTotal } from "@/utils";
 import { readContract, waitForTransactionReceipt } from "@wagmi/core";
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FiCheck, FiLoader, FiSend } from "react-icons/fi";
+import { formatUnits, parseUnits } from "viem";
 import { useAccount, useChainId, useConfig, useWriteContract } from "wagmi";
 
 export default function AirdropForms() {
@@ -17,12 +18,66 @@ export default function AirdropForms() {
   const [step, setStep] = useState<
     "input" | "approving" | "sending" | "complete"
   >("input");
+  const [tokenDecimals, setTokenDecimals] = useState<number>(18);
+  const [tokenSymbol, setTokenSymbol] = useState<string>("");
 
   const chainId = useChainId();
   const config = useConfig();
   const account = useAccount();
-  const total: number = useMemo(() => calculateTotal(amounts), [amounts]);
   const { data: hash, isPending, writeContractAsync } = useWriteContract();
+
+  useEffect(() => {
+    const fetchTokenInfo = async () => {
+      if (!tokenAddress) {
+        setTokenDecimals(18);
+        setTokenSymbol("");
+        return;
+      }
+
+      try {
+        const [decimals, symbol] = await Promise.all([
+          readContract(config, {
+            abi: erc20Abi,
+            address: tokenAddress as `0x${string}`,
+            functionName: "decimals",
+          }),
+          readContract(config, {
+            abi: erc20Abi,
+            address: tokenAddress as `0x${string}`,
+            functionName: "symbol",
+          }),
+        ]);
+
+        setTokenDecimals(Number(decimals));
+        setTokenSymbol(String(symbol));
+      } catch (error) {
+        console.error("Error fetching token info:", error);
+        setTokenDecimals(18);
+        setTokenSymbol("");
+      }
+    };
+
+    fetchTokenInfo();
+  }, [tokenAddress, config]);
+
+  const total: number = useMemo(() => {
+    if (!amounts) return 0;
+    const amountList = amounts
+      .split(/[,\n]+/)
+      .map((amt) => amt.trim())
+      .filter((amt) => amt !== "")
+      .map((amt) => parseFloat(amt) || 0);
+    return amountList.reduce((sum, amt) => sum + amt, 0);
+  }, [amounts]);
+
+  const getParsedAmounts = () => {
+    if (!amounts) return [];
+    return amounts
+      .split(/[,\n]+/)
+      .map((amt) => amt.trim())
+      .filter((amt) => amt !== "")
+      .map((amt) => parseUnits(amt, tokenDecimals));
+  };
 
   const getApprovedAmount = async (
     tSenderAddress: string | null
@@ -49,13 +104,18 @@ export default function AirdropForms() {
     try {
       const tSenderAddress = chainsToTSender[chainId]["tsender"];
       const approvedAmount = await getApprovedAmount(tSenderAddress);
+      const parsedAmounts = getParsedAmounts();
+      const totalAmount = parsedAmounts.reduce(
+        (sum, amt) => sum + amt,
+        BigInt(0)
+      );
 
-      if (approvedAmount < total) {
+      if (approvedAmount < totalAmount) {
         const approvalHash = await writeContractAsync({
           abi: erc20Abi,
           address: tokenAddress as `0x${string}`,
           functionName: "approve",
-          args: [tSenderAddress as `0x${string}`, total],
+          args: [tSenderAddress as `0x${string}`, totalAmount],
         });
         const approvalReceipt = await waitForTransactionReceipt(config, {
           hash: approvalHash,
@@ -74,11 +134,8 @@ export default function AirdropForms() {
             .split(/[,\n]+/)
             .map((addr) => addr.trim())
             .filter((addr) => addr !== ""),
-          amounts
-            .split(/[,\n]+/)
-            .map((amt) => amt.trim())
-            .filter((amt) => amt !== ""),
-          BigInt(total),
+          parsedAmounts,
+          totalAmount,
         ],
       });
 
@@ -113,6 +170,13 @@ export default function AirdropForms() {
             placeholder="0x..."
             value={tokenAddress}
             onChange={(e) => setTokenAddress(e.target.value)}
+            rightElement={
+              tokenSymbol ? (
+                <span className="text-sm text-cyan-300 bg-cyan-900/20 px-2 py-1 rounded-lg border border-cyan-900">
+                  {tokenSymbol}
+                </span>
+              ) : null
+            }
           />
         </motion.div>
 
