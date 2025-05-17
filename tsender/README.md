@@ -1,3 +1,66 @@
+This is my features to implement ideas :
+
+## Features to Implement:
+
+Advanced UI/UX Features:
+- Interactive transaction simulation before sending
+- Use spinners for loading
+- Real-time gas estimation and optimization suggestions
+- Animated transaction flow visualization
+- Toggle between multiple themes(Dark , Light, Cool, Fun etc..)
+- Responsive mobile-first design with gesture controls
+- Loading skeletons and micro-interactions
+- Toast notifications with transaction status
+- Interactive data visualizations for airdrop statistics
+
+Gas Fee Visualizer
+- Show real-time gas estimates
+- Let users pick Low / Average / Fast modes
+- Display in USD (fetch ETH price using CoinGecko)
+
+Analytics & Monitoring:
+
+Transaction History UI
+- Display previous token drops using The Graph or Etherscan API.
+Show:
+	- Amount
+	- Recipients
+	- Status (Pending, Confirmed, Failed)
+	- Link to Etherscan
+
+CSV Upload or Paste Wallets
+- Let users upload .csv files with addresses and amounts
+- Parse and preview the batch
+
+Multi Them Support
+- Toggle between multiple themes(Dark , Light, Cool, Fun etc..)
+
+### V2 Features (Need to update smart contract)
+
+Scheduled Airdrops:
+- Let users schedule airdrops at a future block timestamp.
+
+Token Drop Preview
+- simulated summary table
+
+## 🚀 Feature List & Prioritization
+
+| Feature                             | Type             | Impact     |
+|-------------------------------------|------------------|------------|
+| 🔁 Transaction Simulation           | UI/Logic         | ⭐⭐⭐⭐       |
+| ⏳ Real-time Gas Estimation         | viem/wagmi       | ⭐⭐⭐⭐       |
+| 🧾 CSV Upload                       | UX               | ⭐⭐⭐        |
+| 🌈 Multi-theme Support              | UI               | ⭐⭐         |
+| 📈 Transaction History (The Graph)  | Fullstack        | ⭐⭐⭐⭐       |
+| 📊 Airdrop Analytics                | Fullstack        | ⭐⭐⭐        |
+| 🕹️ Animated Transaction Flow        | UI polish        | ⭐⭐         |
+| 📱 Mobile + Gesture Support         | UI/UX            | ⭐⭐         |
+| 📤 Scheduled Airdrops               | Smart Contract   | ⭐⭐⭐⭐⭐      |
+| 📅 Token Preview Table              | UI + Logic       | ⭐⭐⭐⭐       |
+| 🎯 Gas Mode Picker (Low/Avg/Fast)   | UX               | ⭐⭐⭐        |
+| 🧠 Interactive Data Viz (Charts)    | Polish           | ⭐⭐         |
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

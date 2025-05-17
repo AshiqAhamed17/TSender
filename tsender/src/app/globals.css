@@ -1,58 +1,79 @@
 @import "tailwindcss";
 
 :root {
-  /* Light theme */
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --accent: #06b6d4;
-  --accent-dark: #0891b2;
-  --card-bg: rgba(255, 255, 255, 0.05);
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --primary: #8b5cf6;
+  --primary-dark: #7c3aed;
+  --accent: #ec4899;
+  --accent-dark: #db2777;
+  --card-bg: rgba(30, 41, 59, 0.8);
   --card-border: rgba(255, 255, 255, 0.1);
-  --text-primary: #171717;
-  --text-secondary: #4b5563;
-  --gradient-start: #3b82f6;
-  --gradient-end: #06b6d4;
-  --blob-1: #3b82f6;
-  --blob-2: #06b6d4;
-  --blob-3: #8b5cf6;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --gradient-start: #8b5cf6;
+  --gradient-end: #ec4899;
+  --star-color: #ffffff;
+  --star-size: 2px;
+  --star-count: 200;
+  --shooting-star-color: #ffffff;
+  --bg-gradient-1: #0f172a;
+  --bg-gradient-2: #1e293b;
+  --bg-gradient-3: #334155;
+  --header-bg: rgba(30, 41, 59, 0.8);
+  --header-border: rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="dark"] {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --accent: #06b6d4;
-  --accent-dark: #0891b2;
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --card-border: rgba(255, 255, 255, 0.1);
-  --text-primary: #ededed;
-  --text-secondary: #9ca3af;
-  --gradient-start: #3b82f6;
-  --gradient-end: #06b6d4;
-  --blob-1: #3b82f6;
-  --blob-2: #06b6d4;
-  --blob-3: #8b5cf6;
+
+/* Light theme */
+
+
+[data-theme="light"] {
+  --background: #464647;
+--foreground: #0f172a;
+--primary: #3b82f6;
+--primary-dark: #2563eb;
+--accent: #06b6d4;
+--accent-dark: #0891b2;
+--card-bg: rgba(255, 255, 255, 0.8);
+--card-border: rgba(0, 0, 0, 0.1);
+--text-primary: #0f172a;
+--text-secondary: #475569;
+--gradient-start: #3b82f6;
+--gradient-end: #06b6d4;
+--star-color: #00eaff;
+--star-size: 2px;
+--star-count: 200;
+--shooting-star-color: #000000;
+--bg-gradient-1: #f8fafc;
+--bg-gradient-2: #e2e8f0;
+--bg-gradient-3: #cbd5e1;
+--header-bg: rgba(108, 106, 106, 0.9);
+--header-border: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="aesthetic"] {
-  --background: #f5f5f5;
-  --foreground: #2c3e50;
-  --primary: #8b4513;
-  --primary-dark: #654321;
+  --background: #1a1a1a;
+  --foreground: #f8fafc;
+  --primary: #df8747;
+  --primary-dark: #e3974c;
   --accent: #d4af37;
   --accent-dark: #b8860b;
-  --card-bg: rgba(139, 69, 19, 0.05);
-  --card-border: rgba(139, 69, 19, 0.1);
-  --text-primary: #2c3e50;
-  --text-secondary: #34495e;
+  --card-bg: rgba(215, 144, 93, 0.1);
+  --card-border: rgba(190, 91, 20, 0.2);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
   --gradient-start: #8b4513;
   --gradient-end: #d4af37;
-  --blob-1: #8b4513;
-  --blob-2: #d4af37;
-  --blob-3: #b8860b;
+  --star-color: #d4af37;
+  --star-size: 2px;
+  --star-count: 200;
+  --shooting-star-color: #d4af37;
+  --bg-gradient-1: #1a1a1a;
+  --bg-gradient-2: #262626;
+  --bg-gradient-3: #333333;
+  --header-bg: rgba(26, 26, 26, 0.8);
+  --header-border: rgba(139, 69, 19, 0.2);
 }
 
 @theme inline {
@@ -75,62 +96,62 @@
     border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Custom Animations */
-@keyframes blob {
+/* Shooting Stars Animation */
+@keyframes shootingStar {
   0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
+    transform: translateX(0) translateY(0) rotate(45deg);
     opacity: 1;
   }
-  50% {
-    opacity: 0.5;
+  100% {
+    transform: translateX(1000px) translateY(1000px) rotate(45deg);
+    opacity: 0;
   }
 }
 
-.animate-blob {
-  animation: blob 7s infinite;
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.stars-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.star {
+  position: absolute;
+  background-color: var(--star-color);
+  border-radius: 50%;
+  animation: twinkle 4s infinite;
 }
 
-.animation-delay-2000 {
-  animation-delay: 2s;
+.shooting-star {
+  position: absolute;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--shooting-star-color), transparent);
+  animation: shootingStar 3s linear infinite;
+  opacity: 0;
 }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--shooting-star-color);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 10px var(--shooting-star-color);
 }
 
 /* Smooth Scrolling */
@@ -187,14 +208,14 @@ html {
 
 /* Theme-specific styles */
 [data-theme="aesthetic"] .glass {
-  background: rgba(139, 69, 19, 0.05);
+  background: rgba(139, 69, 19, 0.1);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(139, 69, 19, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.2);
 }
 
 [data-theme="aesthetic"] .glass-hover:hover {
-  background: rgba(139, 69, 19, 0.1);
-  border-color: rgba(139, 69, 19, 0.2);
+  background: rgba(139, 69, 19, 0.15);
+  border-color: rgba(139, 69, 19, 0.3);
 }
 
 /* Background Blobs */
@@ -208,4 +229,32 @@ html {
 
 .bg-blob-3 {
   background-color: var(--blob-3);
+}
+
+/* Theme Alert */
+.theme-alert {
+  background: var(--alert-bg);
+  color: var(--alert-text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--alert-text);
+}
+
+/* Background Gradients */
+.bg-gradient-1 {
+  background-color: var(--bg-gradient-1);
+}
+
+.bg-gradient-2 {
+  background-color: var(--bg-gradient-2);
+}
+
+.bg-gradient-3 {
+  background-color: var(--bg-gradient-3);
+}
+
+/* Header Styles */
+.header-glass {
+  background: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--header-border);
 }

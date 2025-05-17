@@ -29,7 +29,7 @@ export default function Header() {
       // Hide the alert after theme is applied
       setTimeout(() => {
         setShowAlert(false);
-      }, 1000);
+      }, 1500);
     }, 300);
   };
 
@@ -38,17 +38,17 @@ export default function Header() {
       <AnimatePresence>
         {showAlert && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg"
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            className="fixed top-20 right-4 z-50 px-6 py-3 rounded-lg theme-alert shadow-lg"
           >
-            <p className="text-white text-sm font-medium">{alertMessage}</p>
+            <p className="text-lg font-semibold">{alertMessage}</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <header className="sticky top-0 z-40 w-full backdrop-blur-lg bg-white/5 border-b border-white/10 transition-colors duration-300">
+      <header className="header-glass sticky top-0 z-40 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Branding */}
