@@ -23,9 +23,11 @@ export default function InputField({
 }: InputFieldProps) {
   return (
     <div className="flex flex-col gap-2 text-white w-full">
-      <label className="text-sm font-medium text-cyan-300 tracking-wide">
-        {label}
-      </label>
+      {label && (
+        <label className="text-sm font-medium text-cyan-300 tracking-wide">
+          {label}
+        </label>
+      )}
 
       <div className="relative">
         {large ? (
