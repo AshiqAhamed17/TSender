@@ -2,6 +2,9 @@
 cache/
 out/
 
+# Dependencies (fetch via `make install`)
+lib/
+
 # Ignores development broadcast logs
 !/broadcast
 /broadcast/*/31337/

@@ -36,6 +36,21 @@ export const chainsToTSender: ContractsConfig = {
     }
 }
 
+interface StablecoinsConfig {
+    [chainId: number]: {
+        symbol: string
+        address: string
+    }[]
+}
+
+// Circle testnet stablecoins, useful as one-click quick-select tokens for the airdrop form
+export const chainsToStablecoins: StablecoinsConfig = {
+    11155111: [
+        { symbol: "USDC", address: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238" },
+        { symbol: "EURC", address: "0x08210F9170F89Ab7658F0B5E3fF39b0E03C594D4" },
+    ],
+}
+
 export const erc20Abi = [
     {
         anonymous: false,

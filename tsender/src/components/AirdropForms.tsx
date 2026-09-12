@@ -1,7 +1,7 @@
 "use client";
 
 import InputField from "@/components/ui/InputField";
-import { chainsToTSender, erc20Abi, tsenderAbi } from "@/constants";
+import { chainsToStablecoins, chainsToTSender, erc20Abi, tsenderAbi } from "@/constants";
 import { calculateTotal } from "@/utils";
 import { readContract, waitForTransactionReceipt } from "@wagmi/core";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,6 +25,7 @@ export default function AirdropForms() {
   const config = useConfig();
   const account = useAccount();
   const { data: hash, isPending, writeContractAsync } = useWriteContract();
+  const stablecoins = chainsToStablecoins[chainId] ?? [];
 
   useEffect(() => {
     const fetchTokenInfo = async () => {
@@ -91,7 +92,7 @@ export default function AirdropForms() {
       abi: erc20Abi,
       address: tokenAddress as `0x${string}`,
       functionName: "allowance",
-      args: [account.address, tokenAddress as `0x${string}`],
+      args: [account.address, tSenderAddress as `0x${string}`],
     });
 
     return response as number;
@@ -160,6 +161,29 @@ export default function AirdropForms() {
         animate={{ scale: 1 }}
         transition={{ duration: 0.3 }}
       >
+        {stablecoins.length > 0 && (
+          <motion.div
+            className="flex flex-wrap gap-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {stablecoins.map((coin) => (
+              <button
+                key={coin.address}
+                type="button"
+                onClick={() => setTokenAddress(coin.address)}
+                className={`px-3 py-1.5 text-sm rounded-lg border transition-colors ${
+                  tokenAddress === coin.address
+                    ? "bg-cyan-500/20 border-cyan-400 text-cyan-300"
+                    : "bg-white/5 border-white/10 text-gray-300 hover:border-cyan-400/50"
+                }`}
+              >
+                {coin.symbol}
+              </button>
+            ))}
+          </motion.div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

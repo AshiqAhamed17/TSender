@@ -44,9 +44,10 @@ cd TSender
 cd tsender
 npm install
 
-# Install smart contract dependencies
+# Install smart contract dependencies (requires Foundry: https://getfoundry.sh)
 cd ../tsender-smart-contract
-npm install
+make install
+forge build
 ```
 
 3. Set up environment variables:
@@ -56,11 +57,16 @@ npm install
 cp .env.example .env.local
 ```
 
+Then fill in `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` with a free project ID from [Reown Cloud](https://cloud.reown.com) (formerly WalletConnect Cloud).
+
 4. Start the development server:
 
 ```bash
+cd tsender
 npm run dev
 ```
+
+The TSender contract is already deployed on Sepolia, Ethereum mainnet, Arbitrum, Optimism, Base, zkSync, and a local Anvil chain (see `src/constants.ts`) — connect your wallet to one of those networks to use the app without deploying anything yourself.
 
 ## 📝 Usage
 

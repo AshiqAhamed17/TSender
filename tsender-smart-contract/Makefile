@@ -12,7 +12,7 @@ clean  :; forge clean
 # Remove modules
 remove :; rm -rf .gitmodules && rm -rf .git/modules/* && rm -rf lib && touch .gitmodules 
 
-install :; forge install foundry-rs/forge-std --no-commit && forge install openzeppelin/openzeppelin-contracts --no-commit && forge install a16z/halmos-cheatcodes --no-commit && forge install huff-language/foundry-huff --no-commit
+install :; forge install foundry-rs/forge-std --no-git && forge install openzeppelin/openzeppelin-contracts@v5.0.2 --no-git && forge install a16z/halmos-cheatcodes --no-git && forge install huff-language/foundry-huff --no-git
 
 # Update Dependencies
 update:; forge update
