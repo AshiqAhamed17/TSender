@@ -1,32 +1,28 @@
-import Header from "@/components/Header";
-import StarsBackground from "@/components/StarsBackground";
+import Footer from "@/components/site/Footer";
+import Nav from "@/components/site/Nav";
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import { Providers } from "./providers";
 
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+
 export const metadata: Metadata = {
-  title: "TSender",
+  title: "TSender: batch token transfers",
   description:
-    "Hyper gas efficient smart contracts for air dropping tokens to a large number of users",
+    "Send ERC-20 tokens or ETH to hundreds of wallets in a single transaction, using a gas-optimised smart contract.",
 };
 
 export default function RootLayout(props: { children: ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen bg-gradient-to-br from-[var(--bg-gradient-1)] via-[var(--bg-gradient-2)] to-[var(--bg-gradient-3)] text-white antialiased overflow-x-hidden theme-transition">
-        <StarsBackground />
-        <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-        <div className="fixed inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5" />
-        <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.1),rgba(255,255,255,0))]" />
-
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} scroll-smooth`}>
+      <body className="min-h-screen overflow-x-hidden">
         <Providers>
-          <div className="relative">
-            <Header />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              {props.children}
-            </div>
-          </div>
+          <Nav />
+          <main>{props.children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
     unoptimized: true
   },
   basePath: "",
-  assetPrefix: "./",
   trailingSlash: true
 };
 

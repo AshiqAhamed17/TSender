@@ -12,6 +12,8 @@ export default getDefaultConfig({
     // contract on its free tier, which wagmi's readContract relies on.
     transports: {
         [sepolia.id]: http("https://ethereum-sepolia-rpc.publicnode.com"),
+        [anvil.id]: http(),
+        [zksync.id]: http(),
     },
     ssr: false
 })

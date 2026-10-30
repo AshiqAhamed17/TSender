@@ -51,6 +51,41 @@ export const chainsToStablecoins: StablecoinsConfig = {
     ],
 }
 
+// Multicall3 is deployed at the same address on nearly every EVM chain (incl. Sepolia).
+// aggregate3Value lets us send native ETH to many recipients in one transaction,
+// so native-ETH batches need no new contract.
+export const MULTICALL3_ADDRESS = "0xcA11bde05977b3631167028862bE2a173976CA11"
+
+export const multicall3Abi = [
+    {
+        type: "function",
+        name: "aggregate3Value",
+        stateMutability: "payable",
+        inputs: [
+            {
+                name: "calls",
+                type: "tuple[]",
+                components: [
+                    { name: "target", type: "address" },
+                    { name: "allowFailure", type: "bool" },
+                    { name: "value", type: "uint256" },
+                    { name: "callData", type: "bytes" },
+                ],
+            },
+        ],
+        outputs: [
+            {
+                name: "returnData",
+                type: "tuple[]",
+                components: [
+                    { name: "success", type: "bool" },
+                    { name: "returnData", type: "bytes" },
+                ],
+            },
+        ],
+    },
+] as const
+
 export const erc20Abi = [
     {
         anonymous: false,
